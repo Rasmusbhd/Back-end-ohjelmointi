@@ -47,5 +47,14 @@ private BookRepository repository;
         }
         return "redirect:/booklist";
     }
+    @GetMapping("/editbook/{id}")
+    public String editBook(@PathVariable("id") Long id, Model model) {
+        if (id != null) {
+        Book book = repository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Invalid book Id: " + id));
+        model.addAttribute("book", book);
+        }
+        return "editbook";
+    }
 
  }
