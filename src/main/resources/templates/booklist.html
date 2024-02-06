@@ -14,11 +14,15 @@
         <th>Year</th>
     </tr>
         <tr th:each = "book : ${books}">
-            <td th:text = "${book.Author}"></td>
-            <td th:text = "${book.Title}"></td>
-            <td th:text = "${book.Isbn}"></td>
+            <td th:text = "${book.author}"></td>
+            <td th:text = "${book.title}"></td>
+            <td th:text = "${book.isbn}"></td>
             <td th:text = "${book.publicationYear}"></td>
+            <td>
+                <a th:href="@{/deletebook/{id}(id =${book.id})}" onclick="return confirm('Are you sure you want to delete this book?')">Delete</a>
+            </td>
         </tr>
 </table>
+<a th:href="@{/addbook}">Add Book</a>
 </body>
 </html>
