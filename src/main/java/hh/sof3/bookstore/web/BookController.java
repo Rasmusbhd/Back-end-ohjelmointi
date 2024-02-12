@@ -13,10 +13,10 @@ import hh.sof3.bookstore.domain.BookRepository;
 @Controller
 public class BookController {
 @Autowired
-private BookRepository repository;
+private BookRepository brepository;
     
-    public BookController(BookRepository repository) {
-        this.repository = repository;
+    public BookController(BookRepository brepository) {
+        this.brepository = brepository;
     }
     @GetMapping("/index")
     public String index(Model model) {
@@ -25,7 +25,7 @@ private BookRepository repository;
 
     @GetMapping("/booklist")
     public String bookList(Model model) {
-        model.addAttribute("books", repository.findAll());
+        model.addAttribute("books", brepository.findAll());
         return "booklist";
     }
     @GetMapping("/addbook")
@@ -36,21 +36,21 @@ private BookRepository repository;
     @PostMapping("/savebook")
     public String saveBook(Book book) {
         if (book != null) {
-            repository.save(book);
+            brepository.save(book);
         }
         return "redirect:/booklist";
     }
     @GetMapping("/deletebook/{id}")
     public String deleteBook(@PathVariable("id") Long id, Model model) {
         if (id != null) {
-            repository.deleteById(id);
+            brepository.deleteById(id);
         }
         return "redirect:/booklist";
     }
     @GetMapping("/editbook/{id}")
     public String editBook(@PathVariable("id") Long id, Model model) {
         if (id != null) {
-        Book book = repository.findById(id)
+        Book book = brepository.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("Invalid book Id: " + id));
         model.addAttribute("book", book);
         }
