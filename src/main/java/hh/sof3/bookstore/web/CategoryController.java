@@ -14,10 +14,6 @@ public class CategoryController {
     @Autowired
     private CategoryRepository crepository;
 
-    public CategoryController(CategoryRepository crepository) {
-        this.crepository = crepository;
-    }
-
     @GetMapping("/categorylist")
     public String getCategoryList(Model model) {
         model.addAttribute("categories", crepository.findAll());

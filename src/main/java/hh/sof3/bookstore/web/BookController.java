@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import hh.sof3.bookstore.domain.Book;
 import hh.sof3.bookstore.domain.BookRepository;
+import hh.sof3.bookstore.domain.CategoryRepository;
 
 @Controller
 public class BookController {
-@Autowired
-private BookRepository brepository;
+    @Autowired
+    private BookRepository brepository;
+    @Autowired
+    private CategoryRepository crepository;
     
-    public BookController(BookRepository brepository) {
-        this.brepository = brepository;
-    }
     @GetMapping("/index")
     public String index(Model model) {
         return "index";
@@ -31,6 +31,7 @@ private BookRepository brepository;
     @GetMapping("/addbook")
     public String showAddBookForm(Model model) {
         model.addAttribute("book", new Book());
+        model.addAttribute("categories", crepository.findAll());
         return "addbook";
     }
     @PostMapping("/savebook")
@@ -53,6 +54,7 @@ private BookRepository brepository;
         Book book = brepository.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("Invalid book Id: " + id));
         model.addAttribute("book", book);
+        model.addAttribute("categories", crepository.findAll());
         }
         return "editbook";
     }

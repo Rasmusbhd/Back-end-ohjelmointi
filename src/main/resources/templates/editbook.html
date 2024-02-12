@@ -9,7 +9,7 @@
 <h2>Edit Book</h2>
 <div>
 <form th:object="${book}" th:action="@{../savebook}" action = "#" method="post" >
-    <input type="hidden" th:field="*{id}">
+    <input type="hidden" th:field="*{id}" readonly="readonly">
     <label>Title:</label>
     <input type="text" th:field="*{title}" required/><br/>
 
@@ -21,8 +21,15 @@
 
     <label>ISBN:</label>
     <input type="text" th:field="*{isbn}" required/><br/>
+    <div style="clear: both; display: block; height: 10px;"></div>						
+    <label for="category">Category:</label>
+    <select id="category" th:field="*{category}" class="form-control">
+           <option th:each="category: ${categories}" th:value="${category.categoryid}" th:text="${category.name}"></option>
+    </select>
+        
+<div style="clear: both; display: block; height: 10px;"></div>
+<input type="submit" value="Save Book"></input>
 
-    <button type="submit">Save Book</button>
 </form>
 </div>
 </body>

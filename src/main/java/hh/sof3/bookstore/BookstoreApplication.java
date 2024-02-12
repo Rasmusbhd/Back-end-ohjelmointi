@@ -21,13 +21,18 @@ public class BookstoreApplication {
 	}
 
 	@Bean
-	public CommandLineRunner bookDemo(BookRepository brepository) {
+	public CommandLineRunner bookDemo(BookRepository brepository, CategoryRepository crepository) {
 		return (args) -> {
 			log.info("save a couple of books");
-			Book b1 = new Book("A Farewell to Arms", "Ernest Hemingway", 1929, "1232323-21", 0.0);
-			Book b2 = new Book("Animal Farm", "George Orwell", 1945, "2212343-5", 0.0);
-			brepository.save(b1);
-			brepository.save(b2);
+			Category c1 = new Category("Scifi");
+			crepository.save(c1);
+			Category c2 = new Category("Comic");
+			crepository.save(c2);
+			Category c3 = new Category("Fiction");
+			crepository.save(c3);
+			
+			brepository.save(new Book("A Farewell to Arms", "Ernest Hemingway", 1929, "1232323-21", 0.0, c1));
+			brepository.save(new Book("Animal Farm", "George Orwell", 1945, "2212343-5", 0.0, c2));
 
 			log.info("fetch all books");
 			for (Book book : brepository.findAll()) {
@@ -35,24 +40,5 @@ public class BookstoreApplication {
 			}
 		};
 	}
-
-	@Bean
-	public CommandLineRunner categoryDemo(CategoryRepository crepository) {
-		return (args) -> {
-			log.info("Save some sample categories");
-			Category c1 = new Category("Scifi");
-			Category c2 = new Category("Comic");
-			Category c3 = new Category("Fiction");
-			crepository.save(c1);
-			crepository.save(c2);
-			crepository.save(c3);
-
-			log.info("Fetch all the categories");
-			for (Category category : crepository.findAll()) {
-				log.info(category.toString());
-			}
-		};
-	}
-
 }
 
