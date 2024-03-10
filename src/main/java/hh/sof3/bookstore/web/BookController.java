@@ -1,6 +1,7 @@
 package hh.sof3.bookstore.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +42,7 @@ public class BookController {
         }
         return "redirect:/booklist";
     }
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/deletebook/{id}")
     public String deleteBook(@PathVariable("id") Long id, Model model) {
         if (id != null) {
@@ -48,6 +50,7 @@ public class BookController {
         }
         return "redirect:/booklist";
     }
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/editbook/{id}")
     public String editBook(@PathVariable("id") Long id, Model model) {
         if (id != null) {
