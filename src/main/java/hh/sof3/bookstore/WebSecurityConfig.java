@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
@@ -25,8 +26,16 @@ public class WebSecurityConfig {
       http
       .authorizeHttpRequests( authorize -> authorize
         	.requestMatchers(antMatcher("/css/**")).permitAll() // Enable css when logged out
+            .requestMatchers(toH2Console()).permitAll()
         	.anyRequest().authenticated()
       )
+      .csrf(csrf -> csrf
+          .ignoringRequestMatchers(toH2Console())
+     )
+     .headers(headers -> headers
+         .frameOptions(frameoptions -> frameoptions
+                  .disable())
+     )
       .formLogin(formlogin -> formlogin
           .defaultSuccessUrl("/booklist", true)
           .permitAll()
