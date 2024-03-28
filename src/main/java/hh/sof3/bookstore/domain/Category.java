@@ -51,8 +51,4 @@ public String toString() {
     return "Category [categoryid=" + categoryid + ", name=" + name + "]";
 }
 
-
-
-
-
 }
